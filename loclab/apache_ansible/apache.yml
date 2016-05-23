@@ -27,7 +27,7 @@
           - restart apache2
 
      - name: change apache2 virtualhost to port 51000
-       lineinfile: dest=/etc/apache2/sites-available/000-default.conf regexp="^<VirtualHost \*:>" line="<VirtualHost *:{{ http_port }}>" state=present
+       lineinfile: dest=/etc/apache2/sites-available/000-default.conf regexp="^<VirtualHost \*:" line="<VirtualHost *:{{ http_port }}>" state=present
 
        notify:
           - restart apache2
