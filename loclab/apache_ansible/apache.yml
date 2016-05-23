@@ -1,0 +1,50 @@
+---
+- hosts: apachevms
+  sudo: yes
+  vars:
+     http_port: 51000
+     domain: sunset_test.com
+
+  tasks:
+     - name: ping the other node
+       ping:
+
+     - name: update apt repo
+       apt: update_cache=yes
+
+     - name: install apache2
+       apt: name=apache2 state=latest
+
+     - name: enable mod_rewrite apache
+       apache2_module: name=rewrite state=present
+       notify:
+          - restart apache2
+
+     - name: change port on apache2 to custom port 51000
+       lineinfile: dest=/etc/apache2/ports.conf regexp="^Listen " line="Listen {{ http_port }}" state=present
+
+       notify:
+          - restart apache2
+
+     - name: change apache2 virtualhost to port 51000
+       lineinfile: dest=/etc/apache2/sites-available/000-default.conf regexp="^<VirtualHost \*:>" line="<VirtualHost *:{{ http_port }}>" state=present
+
+       notify:
+          - restart apache2
+
+     - name: allow port 51000
+       ufw: rule=allow port=51000 proto=any
+
+     - name: create a new virtualhost file
+       template: src=virtualhost.conf dest=/etc/apache2/sites-available/{{ domain }}.conf
+
+     - name: enable virtual host
+       command: a2ensite {{ domain }}
+       args:
+         creates: /etc/apache2/sites-enabled/{{ domain }}.conf
+       notify:
+          - restart apache2
+
+  handlers:
+     - name: restart apache2
+       service: name=apache2 state=restarted
