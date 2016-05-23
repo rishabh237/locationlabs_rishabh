@@ -62,16 +62,16 @@ Location labs project:
   4. Ansible configuration:
              
              Following modules have been added in playbook:
-                  1. ping
-                  2. update apt
-                  3. install apache2
-                  4. enabling mod_rewrite
-                  5. change port of apache2 to 51000
+                  1. Ping
+                  2. Update apt
+                  3. Install apache2
+                  4. Enabling mod_rewrite
+                  5. Change port of apache2 to 51000
                   6. Added handlers to bounce apache2
-                  7. change apache2 VirtualHost to point to 51000
-                  8. allow firewall for port 51000
-                  9. create a new virtualhost file using a template, added vars to YML.
-                  10. enable the virtual hosts
+                  7. Change apache2 VirtualHost to point to 51000
+                  8. Allow firewall for port 51000
+                  9. Create a new virtualhost file using a template, added vars to YML.
+                  10. Enable the virtual hosts
 
   5. Known Issues:
                   1. Indentation and syntax errors
