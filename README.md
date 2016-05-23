@@ -60,7 +60,8 @@ Location labs project:
                 10) Tested a simple ping module, got pong!
                 
   4. Ansible configuration:
-              Following modules have been added in playbook:
+             
+             Following modules have been added in playbook:
                   1. ping
                   2. update apt
                   3. install apache2
@@ -73,8 +74,9 @@ Location labs project:
                   10. enable the virtual hosts
 
   5. Known Issues:
-                  1. Indentation and syntax errors 
-                  
+                  1. Indentation and syntax errors
+                  2. Found a typo in : lineinfile: dest=/etc/apache2/sites-available/000-default.conf regexp="^<VirtualHost \*:>" line="<VirtualHost *:{{ http_port }}>".  There was an extra ">" in regexp, causing lineinfile to miss the expression and append a new line at the end to /etc/apache2/sites-available/000-default.conf, resulting in failure of the handler "restart apache2".
+            
                 
                 
                 
